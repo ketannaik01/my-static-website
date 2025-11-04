@@ -1,352 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Ketan Naik — Portfolio</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --bg1:#0f172a; --bg2:#071029;
-    --accent-a:#7f5af0; --accent-b:#4ade80; --accent-c:#ff8a00;
-    --glass: rgba(255,255,255,0.04);
-  }
-  *{box-sizing:border-box}
-  body{
-    margin:0; font-family:'Poppins',sans-serif; color:#e6eef8;
-    background: linear-gradient(135deg,#0f172a 0%, #2b0f3a 50%, #042a2b 100%);
-    background-size: 300% 300%;
-    animation: bgShift 18s ease infinite;
-    scroll-behavior:smooth;
-  }
-  @keyframes bgShift{
-    0%{background-position:0% 50%}
-    50%{background-position:100% 50%}
-    100%{background-position:0% 50%}
-  }
-
-  /* layout */
-  .layout{display:grid; grid-template-columns: 300px 1fr; min-height:100vh;}
-  @media(max-width:900px){ .layout{grid-template-columns:1fr} .sidebar{position:relative; padding:20px} }
-
-  /* sidebar */
-  .sidebar{
-    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-    border-right:1px solid rgba(255,255,255,0.03);
-    padding:28px; display:flex;flex-direction:column;align-items:center;gap:18px;
-    position:sticky; top:18px; height:calc(100vh - 36px);
-  }
-  .avatar{
-    width:150px; height:150px; border-radius:22px; overflow:hidden; border:3px solid rgba(255,255,255,0.06);
-    box-shadow:0 10px 30px rgba(2,6,23,0.6);
-    background:linear-gradient(135deg,var(--accent-a),var(--accent-b));
-    display:flex; align-items:center; justify-content:center; font-weight:800; font-size:28px;
-  }
-  .name{font-size:20px; font-weight:700; margin-top:6px}
-  .title{font-size:13px; color:#bcd7ff; margin-bottom:6px}
-  .side-buttons{display:flex;flex-direction:column;gap:8px;width:100%}
-  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px;border-radius:10px;border:0;cursor:pointer;font-weight:600}
-  .btn.primary{background:linear-gradient(90deg,var(--accent-a),var(--accent-b)); color:#021223}
-  .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.04); color:#e6eef8}
-
-  .socials{display:flex;gap:10px;margin-top:10px}
-  .socials a{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,0.02);text-decoration:none;color:#e6eef8}
-
-  .sidebar small{color:#9fbbe6; opacity:0.9}
-
-  /* main content */
-  .main{padding:32px 48px}
-  @media(max-width:900px){ .main{padding:20px} .sidebar{height:auto} }
-
-  section{margin-bottom:20px;padding:18px;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);border-radius:12px}
-  h2{margin:0 0 12px 0;color:transparent;background:linear-gradient(90deg,var(--accent-a),var(--accent-b));-webkit-background-clip:text;font-size:20px}
-
-  .lead{color:#cfe9ff; margin-bottom:10px; line-height:1.5}
-
-  /* compact sections */
-  .row{display:flex;gap:18px;flex-wrap:wrap}
-  .card{flex:1; min-width:240px; background:var(--glass); padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.02)}
-
-  /* skills */
-  .skills{display:flex;flex-wrap:wrap;gap:8px}
-  .skill{padding:6px 10px;border-radius:999px;background:linear-gradient(90deg,#0ea5e9,#06b6d4);font-weight:600;color:#041827;font-size:13px}
-
-  /* experience */
-  .exp-item{margin-bottom:8px}
-  .exp-item h4{margin:0;font-size:15px}
-  .exp-item p{margin:4px 0;color:#bcd7ff;font-size:13px}
-
-  /* projects */
-  .projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
-  .project{
-    background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
-    border-radius:10px;padding:12px;border:1px solid rgba(255,255,255,0.03)
-  }
-  .project img{width:100%;height:140px;object-fit:cover;border-radius:8px;margin-bottom:8px}
-  .project .meta{display:flex;justify-content:space-between;align-items:center}
-  .project .meta button{padding:8px 10px;border-radius:8px;border:0;cursor:pointer;background:linear-gradient(90deg,var(--accent-a),var(--accent-b));color:#021223;font-weight:700}
-
-  /* contact */
-  .contact-form{max-width:540px;margin:auto;display:flex;flex-direction:column;gap:10px}
-  .contact-form input,.contact-form textarea{padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:#e6eef8; outline:none}
-  .contact-form button{padding:10px;border-radius:10px;border:0;cursor:pointer;background:linear-gradient(90deg,var(--accent-c),#e52e71);font-weight:700}
-
-  footer{margin-top:10px;color:#9fbbe6;text-align:center;font-size:13px;padding:8px}
-
-  /* modal for project/code */
-  .modal-backdrop{position:fixed;inset:0;background:rgba(1,6,22,0.6);display:none;align-items:center;justify-content:center;padding:20px;z-index:999}
-  .modal{background:linear-gradient(180deg,#021024, #04182a);border-radius:12px;padding:18px;max-width:900px;width:100%;color:#e6eef8;box-shadow:0 12px 40px rgba(2,6,23,0.6)}
-  .modal pre{white-space:pre-wrap;background:#00121a;padding:12px;border-radius:8px;overflow:auto;font-family:monospace;font-size:13px;color:#bfeef2}
-  .modal .close{float:right;cursor:pointer;padding:4px 8px;border-radius:6px;border:1px solid rgba(255,255,255,0.04);background:rgba(255,255,255,0.02)}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ketan Naik</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #0f172a, #1e3a8a);
+      color: white;
+      text-align: center;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    h1 {
+      font-size: 3em;
+      margin-bottom: 10px;
+      color: #4ade80;
+    }
+    p {
+      max-width: 500px;
+      line-height: 1.5;
+      font-size: 1.1em;
+      color: #e2e8f0;
+    }
+    footer {
+      margin-top: 40px;
+      font-size: 0.9em;
+      color: #94a3b8;
+    }
+  </style>
 </head>
 <body>
+  <h1>Ketan Naik</h1>
+  <p>Hi, I'm Ketan Naik — a passionate student exploring web development and software design.  
+  I enjoy learning new technologies and building simple, functional projects.</p>
 
-<div class="layout">
-
-  <!-- SIDEBAR -->
-  <aside class="sidebar" aria-label="Sidebar">
-    <div class="avatar">
-      <img src="https://i.postimg.cc/Kzbynswc/unnamed.jpg" alt="Ketan" style="width:100%;height:100%;object-fit:cover;border-radius:16px">
-    </div>
-    <div style="text-align:center">
-      <div class="name">Ketan Naik</div>
-      <div class="title">Aspiring Full Stack Developer • MCA Student</div>
-      <small>Java · React · Spring Boot · MySQL</small>
-    </div>
-
-    <div class="side-buttons" style="width:100%;margin-top:10px">
-      <a class="btn primary" href="#contact" id="hireBtn">Hire Me</a>
-      <a class="btn ghost" href="#resume">Resume</a>
-    </div>
-
-    <div class="socials" aria-hidden>
-      <a href="https://github.com/ketannaik01" target="_blank" title="GitHub">🐙</a>
-      <a href="https://www.linkedin.com/in/ketan-naik-140674263/" target="_blank" title="LinkedIn">💼</a>
-      <a href="mailto:ketanknaik591@gmail.com" title="Email">✉️</a>
-    </div>
-
-    <small style="margin-top:auto">© 2025 Ketan Naik</small>
-  </aside>
-
-  <!-- MAIN -->
-  <main class="main">
-    <!-- HOME / INTRO -->
-    <section id="home">
-      <h2>Welcome</h2>
-      <p class="lead">Hi — I'm <strong>Ketan Naik</strong>. I'm an MCA student and an aspiring Full-Stack Developer who builds clean UI and solid backends. I enjoy turning ideas into usable, delightful products.</p>
-    </section>
-
-    <!-- ABOUT / SKILLS -->
-    <section id="about" style="display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap">
-      <div style="flex:1;min-width:240px">
-        <h2>About</h2>
-        <p class="lead" style="margin-bottom:6px">I focus on building full-stack web apps with Java, Spring Boot and React. I have experience in manual QA and love writing clean code and tests.</p>
-        <div style="margin-top:8px" class="card">
-          <div style="display:flex;justify-content:space-between">
-            <div><strong>Location</strong><div style="font-size:13px;color:#bcd7ff">Pune, India</div></div>
-            <div><strong>Email</strong><div style="font-size:13px;color:#bcd7ff">ketanknaik591@gmail.com</div></div>
-          </div>
-        </div>
-      </div>
-
-      <div style="width:320px;">
-        <h2>Skills</h2>
-        <div class="skills card" style="padding:12px">
-          <span class="skill">Java</span>
-          <span class="skill">HTML</span>
-          <span class="skill">CSS</span>
-          <span class="skill">JavaScript</span>
-          <span class="skill">Python</span>
-          <span class="skill">Spring Boot</span>
-          <span class="skill">React</span>
-          <span class="skill">JPDB</span>
-          <span class="skill">MySQL</span>
-          <span class="skill">Windows</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- RESUME -->
-    <section id="resume" style="display:flex;gap:12px;flex-wrap:wrap;align-items:flex-start">
-      <div style="flex:1;min-width:300px">
-        <h2>Resume</h2>
-        <div class="card">
-          <strong>BCA — KJ Somaiya College</strong><div style="font-size:13px;color:#bcd7ff">2020–2023 · 69.38%</div>
-          <div style="height:8px"></div>
-          <strong>MCA — Modern College of Engineering</strong><div style="font-size:13px;color:#bcd7ff">2024–2026 · Currently pursuing</div>
-          <div style="height:10px"></div>
-          <a href="https://docs.google.com/document/d/1hM8MK6e6RY5EUJVvVD218p_x3Ix7EFGI/edit?usp=drive_link&ouid=117241095442388225387&rtpof=true&sd=true" style="display:inline-block;margin-top:8px;padding:8px 12px;border-radius:8px;background:linear-gradient(90deg,var(--accent-a),var(--accent-b));color:#021223;text-decoration:none;font-weight:700">Download Resume</a>
-        </div>
-      </div>
-
-      <div style="width:320px">
-        <h2>Experience</h2>
-        <div class="card" style="padding:12px">
-          <div class="exp-item">
-            <h4>Content Quality Assurance Analyst</h4>
-            <p><small style="color:#9fbbe6">Sep 2023 — Nov 2023</small></p>
-            <p style="font-size:13px;color:#cfe9ff">Performed manual testing, verified content accuracy, logged defects, and helped improve content workflows.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- PROJECTS -->
-    <section id="projects">
-      <h2>Projects</h2>
-      <div class="projects-grid">
-        <!-- Project 1: Feel It Yourself -->
-        <div class="project">
-          <img src="https://images.unsplash.com/photo-1505685296765-3a2736de412f?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=abcd" alt="Feel It Yourself">
-          <h3>Feel It Yourself</h3>
-          <p style="color:#bcd7ff;font-size:13px">Interactive web demo that responds to user input with visual and audio feedback — demo uses Web Audio API + canvas micro-animations.</p>
-          <div class="meta" style="margin-top:8px">
-            <button data-project="p1" class="openProject">View Project</button>
-            <a href="https://github.com/ketannaik01" target="_blank" style="text-decoration:none"><button style="background:linear-gradient(90deg,#ff8a00,#e52e71)">View Code</button></a>
-          </div>
-        </div>
-
-        <!-- Project 2: Smart Notes -->
-        <div class="project">
-          <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=efgh" alt="Smart Notes">
-          <h3>Smart Notes</h3>
-          <p style="color:#bcd7ff;font-size:13px">A responsive notes app (React + localStorage) with search and tagging — lightweight and offline-friendly.</p>
-          <div class="meta" style="margin-top:8px">
-            <button data-project="p2" class="openProject">View Project</button>
-            <a href="https://github.com/ketannaik01" target="_blank" style="text-decoration:none"><button style="background:linear-gradient(90deg,#ff8a00,#e52e71)">View Code</button></a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section id="contact">
-      <h2>Contact</h2>
-      <p style="color:#cfe9ff; margin-bottom:8px">Want to work together? Send a message or use the contact details in the sidebar.</p>
-      <div class="contact-form">
-        <form id="contactForm">
-          <input name="name" placeholder="Your name" required>
-          <input name="email" placeholder="Your email" type="email" required>
-          <textarea name="message" rows="5" placeholder="Message..." required></textarea>
-          <button type="submit">Send Message</button>
-        </form>
-      </div>
-    </section>
-
-    <footer>Made with ❤️ • Ketan Naik</footer>
-  </main>
-</div>
-
-<!-- Project Modal -->
-<div id="modal" class="modal-backdrop" role="dialog" aria-hidden="true">
-  <div class="modal" role="document">
-    <button class="close" id="closeModal">Close</button>
-    <h3 id="modalTitle">Project</h3>
-    <p id="modalDesc" style="color:#bcd7ff"></p>
-    <h4 style="margin-top:12px;color:#dff6ff">Demo Code</h4>
-    <pre id="modalCode"></pre>
-  </div>
-</div>
-
-<script>
-  // Smooth scroll Hire Me button (also defined as anchor)
-  document.getElementById('hireBtn').addEventListener('click', (e)=>{
-    // default anchor behavior will scroll because href="#contact"
-  });
-
-  // Modal logic for project details + demo code
-  const modal = document.getElementById('modal');
-  const modalTitle = document.getElementById('modalTitle');
-  const modalDesc = document.getElementById('modalDesc');
-  const modalCode = document.getElementById('modalCode');
-  const closeModal = document.getElementById('closeModal');
-
-  const projects = {
-    p1: {
-      title: 'Feel It Yourself',
-      desc: 'Interactive demo using Web Audio API and simple canvas particles. Move your mouse and click to create burst visuals and tones — a playful sensory interface.',
-      code:
-`// Tiny demo: click to play a tone and spawn particles (vanilla JS)
-const ctx = new (window.AudioContext||window.webkitAudioContext)();
-function playTone(freq=440, duration=0.3){
-  const o = ctx.createOscillator();
-  const g = ctx.createGain();
-  o.type = 'sine'; o.frequency.value = freq;
-  o.connect(g); g.connect(ctx.destination);
-  g.gain.setValueAtTime(0.0001, ctx.currentTime);
-  g.gain.exponentialRampToValueAtTime(0.12, ctx.currentTime + 0.01);
-  o.start();
-  g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
-  setTimeout(()=>{ o.stop(); o.disconnect(); g.disconnect(); }, duration*1000 + 50);
-}
-// Canvas simple particles
-const canvas = document.createElement('canvas'); document.body.appendChild(canvas);
-canvas.style.position='fixed'; canvas.style.left=0; canvas.style.top=0; canvas.style.pointerEvents='none';
-const ctx2 = canvas.getContext('2d');
-function resize(){ canvas.width = innerWidth; canvas.height = innerHeight; }
-addEventListener('resize', resize); resize();
-let particles = [];
-function spawn(x,y){
-  for(let i=0;i<20;i++){
-    particles.push({x,y,vx:(Math.random()-0.5)*6, vy:(Math.random()-0.8)*6, life:1 - Math.random()*0.6});
-  }
-}
-function loop(){
-  requestAnimationFrame(loop);
-  ctx2.clearRect(0,0,canvas.width,canvas.height);
-  for(let i=particles.length-1;i>=0;i--){
-    const p = particles[i];
-    p.x += p.vx; p.y += p.vy; p.vy += 0.12; p.life -= 0.02;
-    ctx2.fillStyle = 'rgba(255,200,100,'+Math.max(p.life,0)+')';
-    ctx2.beginPath(); ctx2.arc(p.x,p.y,4*p.life,0,Math.PI*2); ctx2.fill();
-    if(p.life<=0) particles.splice(i,1);
-  }
-}
-loop();
-addEventListener('click',(e)=>{ spawn(e.clientX,e.clientY); playTone(220 + Math.random()*800, 0.25); });`
-    },
-    p2: {
-      title: 'Smart Notes',
-      desc: 'A small React-like notes app (here shown conceptually) — supports creating, tagging, searching, and saving notes to localStorage for offline usage.',
-      code:
-`// Tiny notes storage demo (vanilla)
-const NOTES_KEY = 'smart_notes_demo';
-function saveNotes(notes){ localStorage.setItem(NOTES_KEY, JSON.stringify(notes)); }
-function loadNotes(){ try{return JSON.parse(localStorage.getItem(NOTES_KEY)||'[]');}catch(e){return[]} }
-let notes = loadNotes();
-function addNote(text){ notes.unshift({id:Date.now(), text}); saveNotes(notes); render(); }
-function render(){ console.clear(); console.log('Notes:',notes); }
-// Usage:
-addNote('First note — Feel It Yourself idea');`
-    }
-  };
-
-  document.querySelectorAll('.openProject').forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      const id = btn.getAttribute('data-project');
-      const p = projects[id];
-      if(!p) return;
-      modalTitle.textContent = p.title;
-      modalDesc.textContent = p.desc;
-      modalCode.textContent = p.code;
-      modal.style.display = 'flex';
-      modal.setAttribute('aria-hidden','false');
-    });
-  });
-
-  closeModal.addEventListener('click', ()=>{ modal.style.display='none'; modal.setAttribute('aria-hidden','true'); });
-  modal.addEventListener('click', (e)=>{ if(e.target === modal) { modal.style.display='none'; modal.setAttribute('aria-hidden','true'); } });
-
-  // Contact form demo: open mail with prefilled content (no server)
-  document.getElementById('contactForm').addEventListener('submit', function(e){
-    e.preventDefault();
-    const fd = new FormData(this);
-    const name = fd.get('name'), email = fd.get('email'), message = fd.get('message');
-    const mailto = `mailto:ketanknaik591@gmail.com?subject=${encodeURIComponent('Portfolio contact from '+name)}&body=${encodeURIComponent(message + '\\n\\nContact: '+ email)}`;
-    window.location.href = mailto;
-  });
-</script>
-
+  <footer>© 2025 Ketan Naik</footer>
 </body>
 </html>
